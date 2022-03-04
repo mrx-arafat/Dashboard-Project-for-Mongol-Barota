@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <title>URC 2021</title>
+</head>
+
+<body>
+  {% include 'includes/nav.html' %}
+
+  <div class="container">
+
+
+    
+    <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-interval="5000">
+          <div class="col-lg">
+            <div class="cam-container" id="cam-container-1">
+              <!--<h2>Arm Camera</h2>-->
+              <h2>Microscopic Live Feed</h2>
+              <!--<img src="http://192.168.1.150:5000/cam-1" class="video-frame">-->
+              <img src="/img/video.jpg" id="cam-frame-0" class="video-frame" alt="VID">
+              <div class="button-container">
+                <button class="btn btn-primary" onclick="play_cam(0)">Live Color</button>
+                <button class="btn btn-primary" onclick="play_gray(0)">Live Gray</button>
+                <button class="btn btn-primary" onclick="pause_cam(0)">Pause</button>
+                <button class="btn btn-primary" onclick="reload_cam(0)">Reload</button>
+                <!-- <button class="btn btn-primary" onclick="zoom_cam(0)">Zoom</button> -->
+              </div>
+              <br>
+              <h3>Living Microorganism Visible</h3>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item" data-interval="5000">
+          {% include 'includes/mvoc_sensors.html' %}
+        </div>
+        <div class="carousel-item" data-interval="5000">
+          <div class="col-lg">
+            <div class="cam-container" id="cam-container-1">
+              <!--<h2>Arm Camera</h2>-->
+              <h2>Rock Type Detection</h2>
+              <!--<img src="http://192.168.1.150:5000/cam-1" class="video-frame">-->
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/IymHPCL3EVY" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item" data-interval="5000">
+          <img src="/img/video.jpg" alt="Camera Image">
+          <div class="row mt-5">
+            <div class="col-6" style="text-align: center;">
+              <h5 class="sample-title">Color Sensor Result</h5>
+              <button class="btn btn-primary mt-3 mb-3" onclick="fetchRGB('3')">Fetch</button>
+              <div id="show-res-3" class="mt-2" style="font-weight: 800;font-size: large;">
+              </div>
+            </div>
+            <div class="col-6">
+              <img src="/img/video.jpg" alt="Mursel Dummy Data">
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item" data-interval="5000">
+          <div class="col-lg">
+            <div class="cam-container" id="cam-container-1">
+              <!--<h2>Arm Camera</h2>-->
+              <h2>Fossil Mark Visible</h2>
+              <!--<img src="http://192.168.1.150:5000/cam-1" class="video-frame">-->
+              <img src="/img/video.jpg" alt="Fixed Image Dummy Data">
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item" data-interval="5000">
+          <div class="col-lg">
+            <div class="cam-container" id="cam-container-1">
+              <!--<h2>Arm Camera</h2>-->
+              <h2>Rock Type Detection</h2>
+              <!--<img src="http://192.168.1.150:5000/cam-1" class="video-frame">-->
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/IymHPCL3EVY" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item" data-interval="5000">
+          <div class="col-lg">
+            <div class="cam-container" id="cam-container-1">
+              <!--<h2>Arm Camera</h2>-->
+              <h2>Conclusion</h2>
+              <!--<img src="http://192.168.1.150:5000/cam-1" class="video-frame">-->
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+      <div style="position: relative;">
+        <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev" style="background-color: violet;">
+          <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: crimson;"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next" style="background-color: violet;">
+          <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: crimson;"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+
+  <style>
+    .sample-title{
+      margin-top: 5px;
+    }
+    .brdr{
+      border: 0.6px solid rgb(177, 177, 177);
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 25px;
+    }
+
+    .switch input { 
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 5px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 15px;
+      width: 15px;
+      left: 3px;
+      bottom: 2.5px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(30px);
+      -ms-transform: translateX(30px);
+      transform: translateX(30px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+  </style>
+
+  <script>
+    
+    var disp = "";
+    var disprgb = "";
+
+    function calculateVal(ser){
+      var protien_val = document.getElementById("protien-val-"+ser).checked; 
+      var carbon_val = document.getElementById("carbon-val-"+ser).checked; 
+      var nh_val = document.getElementById("nh-val-"+ser).checked; 
+      
+      if( protien_val && carbon_val && nh_val ) {
+        disp = "Extant";
+      } else if( protien_val && carbon_val && !nh_val ) {
+        disp = "Extant";
+      } else if( protien_val && !carbon_val && nh_val ) {
+        disp = "Extinct + Extant (High possibility)";
+      } else if( protien_val && !carbon_val && !nh_val ) {
+        disp = "Extinct";
+      } else if( !protien_val && carbon_val && nh_val ) {
+        disp = "Extant";
+      } else if( !protien_val && carbon_val && !nh_val ) {
+        disp = "Extant";
+      } else if( !protien_val && !carbon_val && nh_val ) {
+        disp = "Can't determine";
+      } else if( !protien_val && !carbon_val && !nh_val ) {
+        disp = "No life!";
+      }
+
+      document.getElementById('show-res-'+ser).innerHTML = disp;
+    }
+
+    function fetchRGB(ser){
+      disprgb = "#228B22 <br> N3";
+      document.getElementById('show-res-'+ser).innerHTML = disprgb;
+    }
+  </script>
+
+
+  <style>
+    .video-frame {
+      width: 100%;
+    }
+
+    .cam-container {
+      cursor: pointer;
+      transition: transform .2s;
+    }
+
+    .cam-container-zoom {
+      position: fixed;
+      z-index: 1;
+      width: 1000px;
+      left: 10px;
+      background-color: #111;
+      color: #fff;
+    }
+
+    .button-container {
+      margin-top: 30px;
+    }
+  </style>
+  <script>
+    var host_img_url = "/img/video.jpg";
+    var cam_url = [];
+    cam_url[0] = "http://192.168.1.155:5000/cam-0";
+    cam_url[1] = "http://192.168.1.155:5000/cam-1";
+    cam_url[2] = "http://192.168.1.155:5000/cam-2";
+
+    var gray_url = [];
+    gray_url[0] = "http://192.168.1.155:5000/gray-0";
+    gray_url[1] = "http://192.168.1.155:5000/gray-1";
+    gray_url[2] = "http://192.168.1.155:5000/gray-2";
+
+    var cam_zoom = [];
+    cam_zoom[0] = false,
+      cam_zoom[1] = false,
+      cam_zoom[2] = false;
+
+    document.getElementById('cam-frame-0').src = host_img_url;
+    document.getElementById('cam-frame-1').src = host_img_url;
+    document.getElementById('cam-frame-2').src = host_img_url;
+
+    function reload_cam(ser) {
+      pause_cam(ser);
+      setTimeout(function () {
+        play_cam(ser);
+      }, 1000);
+    }
+
+    function play_cam(ser) {
+      pause_cam(ser);
+      document.getElementById('cam-frame-' + ser).src = cam_url[ser];
+    }
+
+    function play_gray(ser) {
+      pause_cam(ser);
+      document.getElementById('cam-frame-' + ser).src = gray_url[ser];
+    }
+
+    function pause_cam(ser) {
+      document.getElementById('cam-frame-' + ser).src = host_img_url;
+    }
+    function zoom_cam(ser) {
+      if (!cam_zoom[ser])
+        document.getElementById('cam-container-' + ser).classList.add('cam-container-zoom');
+      else
+        document.getElementById('cam-container-' + ser).classList.remove('cam-container-zoom');
+      cam_zoom[ser] = !cam_zoom[ser];
+    }
+
+  </script>
+
+
+  <script src="js/jquery-3.2.1.slim.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

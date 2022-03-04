@@ -1,0 +1,291 @@
+<script src="js/chart.min.js"></script>
+<script src="js/utils.js"></script>
+<!--<div class="row mb-5 text-center">
+  <div class="col-12">
+    <h3 class="mb-3">MVOC Sensors data</h3>
+    <div class="row text-center table-r">
+      <div class="col-6">Detected Color:</div>
+      <div class="col-6" id="color-val">1</div>
+    </div>
+    <div class="row text-center table-r">
+      <div class="col-6">Ammonia:</div>
+      <div class="col-6" id="ammonia-val">1</div>
+    </div>
+    <div class="row text-center table-r">
+      <div class="col-6">Alcohol:</div>
+      <div class="col-6" id="alcohol-val">1</div>
+    </div>
+    <div class="row text-center table-r">
+      <div class="col-6">CO2:</div>
+      <div class="col-6" id="co2-val">1</div>
+    </div>
+    <div class="row text-center table-r">
+      <div class="col-6">Formaldehyde:</div>
+      <div class="col-6" id="formaldehyde-val">1</div>
+    </div>
+  </div>
+  <div class="col-12 mt-5">
+    <button class="btn btn-primary" onclick="fetch_data_call()" id="fetch-btn">Fetch</button>
+  </div>
+</div>-->
+<div class="row mb-5 text-center">
+  <div class="col-12">
+    <h3 class="mb-3">MVOC Sensors data</h3>
+  </div>
+  <div class="col-6">
+    <canvas id="ammonia-canvas"></canvas>
+  </div>
+  <div class="col-6">
+    <canvas id="alcohol-canvas"></canvas>
+  </div>
+  <div class="col-6">
+    <canvas id="co2-canvas"></canvas>
+  </div>
+  <div class="col-6">
+    <canvas id="formaldehyde-canvas"></canvas>
+  </div>
+  <div class="col-12 mt-5">
+    <button class="btn btn-primary" onclick="fetch_data_call()" id="fetch-btn">Fetch</button>
+  </div>
+</div>
+<!-- ChartJS Scripts -->
+<script>
+  //Ammonia
+  var ammonia_datas=[39,33,35,37,36,37,38,35,34,37];
+  var ammonia_config = {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [{
+        label: 'Ammonia',
+        backgroundColor: window.chartColors.red,
+        borderColor: window.chartColors.red,
+        data: [],
+        fill: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: false,
+        text: 'Chart.js Line Chart'
+      },
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      scales: {
+        xAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Time'
+          }
+        }],
+        yAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'ppm'
+          }
+        }]
+      }
+    }
+  };
+
+  var ammonia_loop_cnt = 0;
+  function add_ammonia_data_to_chart() {
+    var current = new Date();
+    var time = current.getMinutes()+":"+current.getSeconds();
+    ammonia_config.data.labels.push(time);
+
+    ammonia_config.data.datasets.forEach(function(dataset) {
+      dataset.data.push(ammonia_datas[ammonia_loop_cnt % 10]);
+    });
+
+    if(ammonia_config.data.labels.length>10) {
+      ammonia_config.data.labels.shift(); // remove the label first
+
+      ammonia_config.data.datasets.forEach(function(dataset) {
+        dataset.data.shift();
+      });
+    }
+
+    ammonia_loop_cnt++;
+    //window.myLine.update(); 
+  }
+
+  //Alcohol
+  var alcohol_datas=[39,33,35,37,36,37,38,35,34,37];
+  var alcohol_config = {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [{
+        label: 'Alcohol',
+        backgroundColor: window.chartColors.blue,
+        borderColor: window.chartColors.blue,
+        data: [],
+        fill: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: false,
+        text: 'Chart.js Line Chart'
+      },
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      scales: {
+        xAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Time'
+          }
+        }],
+        yAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'ppm'
+          }
+        }]
+      }
+    }
+  };
+
+  var alcohol_loop_cnt = 0;
+  function add_alcohol_data_to_chart(){
+    var current = new Date();
+    var time = current.getMinutes()+":"+current.getSeconds();
+    alcohol_config.data.labels.push(time);
+
+    alcohol_config.data.datasets.forEach(function(dataset) {
+      dataset.data.push(alcohol_datas[alcohol_loop_cnt % 10]);
+    });
+
+    if(alcohol_config.data.labels.length>10) {
+      alcohol_config.data.labels.shift(); // remove the label first
+
+      alcohol_config.data.datasets.forEach(function(dataset) {
+        dataset.data.shift();
+      });
+    }
+
+    alcohol_loop_cnt++;
+    //window.myLine.update();
+  }
+
+  function update_chart(){
+    add_ammonia_data_to_chart();
+    add_alcohol_data_to_chart();
+
+    window.myLine.update();
+  }
+  
+
+  window.onload = function() {
+    var ammonia_ctx = document.getElementById('ammonia-canvas').getContext('2d');
+    window.myLine = new Chart(ammonia_ctx, ammonia_config);
+    var alcohol_ctx = document.getElementById('alcohol-canvas').getContext('2d');
+    window.myLine = new Chart(alcohol_ctx, alcohol_config);
+  };
+
+
+  //setInterval(add_ammonia_data_to_chart,1000);
+  //setInterval(add_alcohol_data_to_chart,1000);
+  setInterval(update_chart,1000);
+
+</script>
+
+<style>
+  .table-r{
+    max-width: 400px;
+    margin: auto;
+  }
+</style>
+<script>
+  var continue_fetch = false;
+  var set_time_func = null;
+  var color_val = "";
+  var ammonia_val="";
+  var alcohol_val="";
+  var co2_val="";
+
+  //var url = "http://192.168.1.156:80";
+  var url = "http://192.168.1.155:5001/get-data";
+
+  function fetch_data_call(){
+    if(!set_time_func){
+      set_time_func =  setInterval(getData,1000);
+      document.getElementById("fetch-btn").classList.remove("btn-primary");
+      document.getElementById("fetch-btn").classList.add("btn-danger");
+    } else {
+      clearInterval(set_time_func);
+      set_time_func = null;
+      document.getElementById("fetch-btn").classList.add("btn-primary");
+      document.getElementById("fetch-btn").classList.remove("btn-danger");
+    }
+  }
+  
+  function getData(){
+    fetch(url,{
+      mode: 'no-cors',
+      headers: {
+        'Access-Control-Allow-Origin':'*'
+      }
+    })
+    .then(
+      function(response) {
+        //var data = response;
+        console.log(response);
+        response.text()
+      }
+    ).then(function(text){
+          console.log(text);
+          var parser = new DOMParser();
+	        var doc = parser.parseFromString(text, 'text/html');
+          console.log(doc);
+        })
+    .catch(function(err) {
+      console.log('Fetch Error :', err);
+    });
+  }
+
+  function showData(){
+    document.getElementById('color-val').innerHTML = color_val;
+    document.getElementById('ammonia-val').innerHTML = ammonia_val;
+    document.getElementById('alcohol-val').innerHTML = co2_val;
+    document.getElementById('co2-val').innerHTML = alcohol_val;
+  }
+/*
+.then(
+      function(response) {
+        //var data = response;
+        console.log(response);
+        response.text()
+        
+        /*data = data.split(",");
+        color_val = data[0];
+        ammonia_val = data[1];
+        co2_val = data[2];
+        alcohol_val = data[3];
+
+        showData();
+        console.log(response);* /
+      }
+    )
+*/
+</script>

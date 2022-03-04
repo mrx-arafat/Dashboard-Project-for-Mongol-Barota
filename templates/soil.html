@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <title>URC 2021</title>
+  </head>
+  <body>
+    {% include 'includes/nav.html' %}
+
+    {% include 'includes/mvoc_sensors.html' %}
+
+    <h4 class="mt-5 text-center mb-3">Decision Tree</h4>
+
+    <div class="row mx-2 mb-5 justify-content-center text-center">
+      
+      <div class="col-4 brdr">
+        <h5>Sample 1</h5>
+        <div class="row mt-4">
+          <div class="col-4">
+            P 
+            <label class="switch">
+              <input id="protien-val-0" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="col-4">
+            C
+            <label class="switch">
+              <input id="carbon-val-0" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="col-4">
+            N 
+            <label class="switch">
+              <input id="nh-val-0" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary mt-5" onclick="calculateVal('0')">Calculate</button>
+            <div id="show-res-0" class="mt-5" style="font-weight: 800;font-size: large;">
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 brdr">
+        <h5>Sample 2</h5>
+        <div class="row mt-4">
+          <div class="col-4">
+            P 
+            <label class="switch">
+              <input id="protien-val-1" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="col-4">
+            C
+            <label class="switch">
+              <input id="carbon-val-1" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="col-4">
+            N 
+            <label class="switch">
+              <input id="nh-val-1" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary mt-5" onclick="calculateVal('1')">Calculate</button>
+            <div id="show-res-1" class="mt-5" style="font-weight: 800;font-size: large;">
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div class="col-4 brdr">
+        <h5>Sample 3</h5>
+        <div class="row mt-4">
+          <div class="col-4">
+            P 
+            <label class="switch">
+              <input id="protien-val-2" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="col-4">
+            C
+            <label class="switch">
+              <input id="carbon-val-2" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="col-4">
+            N 
+            <label class="switch">
+              <input id="nh-val-2" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary mt-5" onclick="calculateVal('2')">Calculate</button>
+            <div id="show-res-2" class="mt-5" style="font-weight: 800;font-size: large;">
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+    
+    <style>
+      .brdr{
+        border: 1px solid #111;
+      }
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+
+      .switch input { 
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      input:checked + .slider {
+        background-color: #2196F3;
+      }
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+
+      /* Rounded sliders */
+      .slider.round {
+        border-radius: 34px;
+      }
+
+      .slider.round:before {
+        border-radius: 50%;
+      }
+    </style>
+
+    <script>
+      
+      var disp = "";
+
+      function calculateVal(ser){
+        var protien_val = document.getElementById("protien-val-"+ser).checked; 
+        var carbon_val = document.getElementById("carbon-val-"+ser).checked; 
+        var nh_val = document.getElementById("nh-val-"+ser).checked; 
+        
+        if( protien_val && carbon_val && nh_val ) {
+          disp = "Extant";
+        } else if( protien_val && carbon_val && !nh_val ) {
+          disp = "Extant";
+        } else if( protien_val && !carbon_val && nh_val ) {
+          disp = "Extinct + Extant (High possibility)";
+        } else if( protien_val && !carbon_val && !nh_val ) {
+          disp = "Extinct";
+        } else if( !protien_val && carbon_val && nh_val ) {
+          disp = "Extant";
+        } else if( !protien_val && carbon_val && !nh_val ) {
+          disp = "Extant";
+        } else if( !protien_val && !carbon_val && nh_val ) {
+          disp = "Can't determine";
+        } else if( !protien_val && !carbon_val && !nh_val ) {
+          disp = "No life!";
+        }
+
+        document.getElementById('show-res-'+ser).innerHTML = disp;
+      }
+    </script>
+ 
+    
+    <script src="js/jquery-3.2.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

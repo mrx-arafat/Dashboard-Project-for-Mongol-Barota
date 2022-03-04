@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <title>URC 2021</title>
+  </head>
+  <body>
+    {% include 'includes/nav.html' %}
+
+    {% include 'includes/mvoc_sensors.html' %}
+
+    <div class="row mx-2 mb-5 text-center">
+      
+      <div class="col-4">
+        <h4>Sample 1</h4>
+        <img class="rock-img" src="/img/rock.jpg" alt="">
+        <div>Prediction: Shale</div>
+        <div>Munsell Value: N7</div>
+      </div>
+      <div class="col-4">
+        <h4>Sample 2</h4>
+        <img class="rock-img" src="/img/munsell.jpg" alt="">
+        <div>Prediction: munsell</div>
+      </div>
+      <div class="col-4">
+        <h4>Sample 3</h4>
+        <img class="rock-img" src="/img/sedimentary.jpg" alt="">
+        <div>Prediction: sedimentary</div>
+      </div>
+ 
+    
+    </div>
+    
+    <style>
+      .rock-img{
+        width: 90%;
+      }
+
+    </style>
+ 
+    
+    <script src="js/jquery-3.2.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

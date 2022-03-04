@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <title>URC 2021</title>
+  </head>
+  <body>
+    {% include 'includes/nav.html' %}
+
+
+    <div class="container">
+        <div class="row">
+
+
+         
+
+     <div class="col-sm">
+        <div class="cam-container" id="cam-container-2">
+          <h4>Left Camera</h4>
+          <!--<img src="http://192.168.1.150:5000/cam-2" class="video-frame">-->
+          <img src="/img/video.jpg" id="cam-frame-2"  class="video-frame">
+          <div class="button-container">
+            <button class="btn btn-primary" onclick="play_cam(2)">Play</button>
+            <button class="btn btn-primary" onclick="pause_cam(2)">Pause</button>
+            <button class="btn btn-primary" onclick="reload_cam(2)">Reload</button>
+            <button class="btn btn-primary" onclick="zoom_cam(2)">Zoom</button>
+          </div>
+        </div>
+      </div>  
+
+
+     
+
+        </div>
+    </div>
+
+
+    <style>
+        .video-frame {
+          width: 100%;
+        }
+        .cam-container {
+          cursor: pointer;
+          transition: transform .2s;
+        }
+        .cam-container-zoom{
+          position: fixed;
+          z-index: 1;
+          width: 1000px;
+          left: 10px;
+          background-color: #111;
+          color: #fff;
+        }
+        .button-container{
+          margin-top: 30px;
+        }
+      </style>
+      <script>
+        var host_img_url="/img/video.jpg";
+        var cam_url = [];
+        cam_url[0] = "http://192.168.1.155:5000/cam-0";
+        cam_url[1] = "http://192.168.1.155:5000/cam-1";
+        cam_url[2] = "http://192.168.1.155:5000/cam-2";
+        
+        var cam_zoom =[];
+        cam_zoom[0] = false,
+        cam_zoom[1] = false,
+        cam_zoom[2] = false;
+  
+        document.getElementById('cam-frame-0').src = host_img_url;
+        document.getElementById('cam-frame-1').src = host_img_url;
+        document.getElementById('cam-frame-2').src = host_img_url;
+  
+        function reload_cam(ser){
+          pause_cam(ser);
+          setTimeout(function(){
+            play_cam(ser); 
+          }, 1000);
+        }
+  
+        function play_cam(ser){
+          document.getElementById('cam-frame-'+ser).src = cam_url[ser];
+        }
+  
+        function pause_cam(ser){
+          document.getElementById('cam-frame-'+ser).src = host_img_url;
+        }
+        function zoom_cam(ser){
+          if(!cam_zoom[ser])
+            document.getElementById('cam-container-'+ser).classList.add('cam-container-zoom');
+          else
+            document.getElementById('cam-container-'+ser).classList.remove('cam-container-zoom');
+          cam_zoom[ser] = !cam_zoom[ser];
+        }
+  
+      </script>
+      
+      
+      <script src="js/jquery-3.2.1.slim.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+    </body>
+  </html>
