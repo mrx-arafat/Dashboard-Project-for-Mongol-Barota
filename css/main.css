@@ -1,0 +1,21 @@
+.cam-container{
+    height: 60%;
+}
+
+#cam-container-0{
+    position: relative;
+    right: 40px;
+}
+
+#cam-container-1{
+    /* position: relative; */
+    right: 10px;    
+}
+
+#cam-container-2{
+    width: 100%;
+}
+
+img{
+    width: 100%;
+}
